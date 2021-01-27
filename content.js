@@ -8,49 +8,26 @@ function onDOMChange() {
 
 const beginCleanup = () => {
   console.log('Beginning cleanup');
-  removeWhoToFollow();
-  removeHappening();
+  removeSection(['div', 'h2', 'div', 'aside', 'div'], 'Who to follow');
+  removeSection(['div', 'h2', 'div', 'div', 'div', 'div'], 'What’s happening');
+  removeSection(['div', 'h2', 'div', 'aside', 'div'], 'You might like');
+  removeSection(['div', 'h2', 'div', 'aside', 'div'], 'Relevant people');
 };
 
-const removeWhoToFollow = () => {
-  // span > div > h2 > div > aside > div
-  const span = $("span:contains('Who to follow')");
-  const div1 = span.parent('div');
-  const h2 = div1.parent('h2');
-  const div2 = h2.parent('div');
-  const aside = div2.parent('aside');
-  const div3 = aside.parent('div');
+const removeSection = (treeStructure, targetText) => {
+  const span = $(`span:contains('${targetText}')`);
 
-  // console.log(span);
-  // console.log(div1);
-  // console.log(h2);
-  // console.log(div2);
-  // console.log(aside);
-  // console.log(div3);
+  let iterator = span;
 
-  div3.remove();
-};
+  // console.log('Itr before loop', iterator);
 
-const removeHappening = () => {
-  // span > div > h2 > div > div > div > div
+  for (let el of treeStructure) {
+    iterator = iterator.parent(el);
+  }
 
-  const span = $("span:contains('What’s happening')");
-  const div1 = span.parent('div');
-  const h2 = div1.parent('h2');
-  const div2 = h2.parent('div');
-  const div3 = div2.parent('div');
-  const div4 = div3.parent('div');
-  const div5 = div4.parent('div');
+  // console.log('Itr after loop completion', iterator);
 
-  // console.log(span);
-  // console.log(div1);
-  // console.log(h2);
-  // console.log(div2);
-  // console.log(div3);
-  // console.log(div4);
-  // console.log(div5);
-
-  div5.remove();
+  iterator.remove();
 };
 
 document.onload = beginCleanup();
