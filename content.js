@@ -12,6 +12,7 @@ const beginCleanup = () => {
   removeSection(['div', 'h2', 'div', 'div', 'div', 'div'], 'What’s happening');
   removeSection(['div', 'h2', 'div', 'aside', 'div'], 'You might like');
   removeSection(['div', 'h2', 'div', 'aside', 'div'], 'Relevant people');
+  removeSection([], 'Who to follow');
 };
 
 const removeSection = (treeStructure, targetText) => {
