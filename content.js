@@ -8,7 +8,9 @@ function onDOMChange() {
 
 const checkIfNumber = val => {
   let isNum = /^\d+$/.test(val);
-  return isNum;
+  let isThousand = /^\d+(\.\d+)?K+$/.test(val);
+  let isMillion = /^\d+(\.\d+)?M+$/.test(val);
+  return isNum || isThousand || isMillion;
 };
 
 const beginCleanup = () => {
@@ -52,6 +54,7 @@ const removeNumbers = () => {
 
       if (checkIfNumber(innerText)) {
         // TODO: Also handle numbers with suffixes like K, M (eg. 100k, 1M)
+        console.log(innerText);
         item.remove();
       }
     }
