@@ -10,9 +10,16 @@
     <link rel="stylesheet" href="css/switch.css" />
   </head>
   <body>
-    <h1 class="title">Clean Twitter</h1>
+    <h1 id="title">Clean Twitter</h1>
 
-    <button id="toggle"></button>
+    <div id="switch-container">
+      <span id="label"></span>
+
+      <label class="switch">
+        <input type="checkbox" id="checkbox" />
+        <span class="slider round"></span>
+      </label>
+    </div>
 
     <script src="js/jquery.js"></script>
     <script src="js/popup.js"></script>

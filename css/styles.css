@@ -6,9 +6,19 @@ body {
   min-width: 250px !important;
   background-color: white;
   color: black;
+  padding: 8px;
 }
 
-.title {
+#title {
   color: #1da1f2;
   font-weight: bold;
+}
+
+#label {
+  font-size: 18px;
+}
+
+#switch-container {
+  display: flex;
+  align-items: center;
 }
