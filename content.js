@@ -54,7 +54,6 @@ const removeNumbers = () => {
 
       if (checkIfNumber(innerText)) {
         // TODO: Also handle numbers with suffixes like K, M (eg. 100k, 1M)
-        console.log(innerText);
         item.remove();
       }
     }
