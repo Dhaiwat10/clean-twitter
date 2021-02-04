@@ -6,7 +6,7 @@
   "content_scripts": [
     {
       "matches": ["https://twitter.com/*"],
-      "js": ["jquery.js", "content.js"]
+      "js": ["js/jquery.js", "js/content.js", "js/popup.js"]
     }
   ],
   "browser_action": {
@@ -14,5 +14,5 @@
     "default_title": "Clean Twitter",
     "default_popup": "popup.html"
   },
-  "permissions": ["activeTab"]
+  "permissions": ["activeTab", "storage"]
 }

@@ -1,0 +1,14 @@
+* {
+  font-family: 'Inter', sans-serif !important;
+}
+
+body {
+  min-width: 250px !important;
+  background-color: white;
+  color: black;
+}
+
+.title {
+  color: #1da1f2;
+  font-weight: bold;
+}

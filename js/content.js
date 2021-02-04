@@ -1,10 +1,18 @@
-new MutationObserver(() => {
-  onDOMChange();
-}).observe(document, { subtree: true, childList: true });
+chrome.storage.local.get('enabled', data => {
+  if (data.enabled) {
+    new MutationObserver(() => {
+      onDOMChange();
+    }).observe(document, { subtree: true, childList: true });
 
-function onDOMChange() {
-  beginCleanup(true);
-}
+    function onDOMChange() {
+      beginCleanup();
+    }
+
+    document.onload = beginCleanup();
+  } else {
+    //it is disabled
+  }
+});
 
 const checkIfNumber = val => {
   let isNum = /^\d+$/.test(val);
@@ -65,5 +73,3 @@ const removeFooter = () => {
 
   navElement.remove();
 };
-
-document.onload = beginCleanup();
