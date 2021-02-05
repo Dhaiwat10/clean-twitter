@@ -18,7 +18,8 @@ const checkIfNumber = val => {
   let isNum = /^\d+$/.test(val);
   let isThousand = /^\d+(\.\d+)?K+$/.test(val);
   let isMillion = /^\d+(\.\d+)?M+$/.test(val);
-  return isNum || isThousand || isMillion;
+  let hasComma = /^\d{1,3}(,\d{3})*(\.\d+)?$/.test(val);
+  return isNum || isThousand || isMillion || hasComma;
 };
 
 const beginCleanup = () => {
