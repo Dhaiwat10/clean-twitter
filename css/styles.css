@@ -16,6 +16,7 @@ body {
 
 #label {
   font-size: 18px;
+  width: 30%;
 }
 
 #switch-container {
