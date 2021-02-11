@@ -1,4 +1,4 @@
-var noSidebar = false; //disabled by default
+var noSidebar = true; //disabled by default
 var noNumbers = false; //disabled by default
 
 var checkbox1 = document.getElementById('checkbox1');
@@ -7,8 +7,8 @@ var label1 = document.getElementById('label1');
 var checkbox2 = document.getElementById('checkbox2');
 var label2 = document.getElementById('label2');
 
-label1.textContent = 'No Sidebar';
-label2.textContent = 'No Numbers';
+label1.textContent = 'Hide Sidebars';
+label2.textContent = 'Hide Numbers';
 
 let tab = null;
 
