@@ -14,12 +14,17 @@ body {
   font-weight: bold;
 }
 
-#label {
+.label {
   font-size: 18px;
-  width: 30%;
+  width: 50%;
 }
 
-#switch-container {
+.switch-container {
   display: flex;
   align-items: center;
+  margin-bottom: 20px;
+}
+
+.switch {
+  margin-left: auto;
 }

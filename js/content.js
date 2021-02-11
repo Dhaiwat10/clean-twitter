@@ -1,20 +1,17 @@
-chrome.storage.local.get('enabled', data => {
-  if (data.enabled) {
-    new MutationObserver(() => {
-      onDOMChange();
-    }).observe(document, { subtree: true, childList: true });
+let no_sidebar = false;
+let no_numbers = false;
 
-    function onDOMChange() {
-      beginCleanup();
-    }
-
-    document.onload = beginCleanup();
-  } else {
-    //it is disabled
-  }
+chrome.storage.local.get('noSidebar', (data) => {
+  console.log('noSidebar', data.noSidebar);
+  no_sidebar = data.noSidebar;
 });
 
-const checkIfNumber = val => {
+chrome.storage.local.get('noNumbers', (data) => {
+  console.log('noNumbers', data.noNumbers);
+  no_numbers = data.noNumbers;
+});
+
+const checkIfNumber = (val) => {
   let isNum = /^\d+$/.test(val);
   let isThousand = /^\d+(\.\d+)?K+$/.test(val);
   let isMillion = /^\d+(\.\d+)?M+$/.test(val);
@@ -22,17 +19,34 @@ const checkIfNumber = val => {
   return isNum || isThousand || isMillion || hasComma;
 };
 
-const beginCleanup = () => {
+const beginCleanup = (no_sidebar, no_numbers) => {
   // console.log('Beginning cleanup');
-  removeSection(['div', 'h2', 'div', 'aside', 'div'], 'Who to follow');
-  removeSection(['div', 'h2', 'div', 'div', 'div', 'div'], 'What’s happening');
-  removeSection(['div', 'h2', 'div', 'aside', 'div'], 'You might like');
-  removeSection(['div', 'h2', 'div', 'aside', 'div'], 'Relevant people');
 
-  removeNumbers();
+  if (no_sidebar) {
+    removeSection(['div', 'h2', 'div', 'aside', 'div'], 'Who to follow');
+    removeSection(
+      ['div', 'h2', 'div', 'div', 'div', 'div'],
+      'What’s happening'
+    );
+    removeSection(['div', 'h2', 'div', 'aside', 'div'], 'You might like');
+    removeSection(['div', 'h2', 'div', 'aside', 'div'], 'Relevant people');
+    removeFooter();
+  }
 
-  removeFooter();
+  if (no_numbers) {
+    removeNumbers();
+  }
 };
+
+new MutationObserver(() => {
+  onDOMChange();
+}).observe(document, { subtree: true, childList: true });
+
+function onDOMChange() {
+  beginCleanup(no_sidebar, no_numbers);
+}
+
+document.onload = beginCleanup(no_sidebar, no_numbers);
 
 const removeSection = (treeStructure, targetText) => {
   const span = $(`span:contains('${targetText}')`);
