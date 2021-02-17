@@ -3,6 +3,10 @@
   "name": "Clean Twitter",
   "description": "Remove all the annoying clutter from your Twitter.",
   "version": "0.1.1",
+  "icons": {
+    "16": "icon.png",
+    "32": "icon.png"
+  },
   "content_scripts": [
     {
       "matches": ["https://twitter.com/*"],
