@@ -12,8 +12,8 @@ chrome.storage.local.get('noNumbers', (data) => {
   no_numbers = data.noNumbers;
 });
 
-chrome.storage.local.get('noLoginPromt', (data) => {
-  console.log('noLoginPromt', data.noLoginPrompt);
+chrome.storage.local.get('noLoginPrompt', (data) => {
+  console.log('noLoginPrompt', data.noLoginPrompt);
   no_login_prompt = data.noLoginPrompt;
 });
 
