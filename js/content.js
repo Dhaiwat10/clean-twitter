@@ -44,7 +44,12 @@ const beginCleanup = (no_sidebar, no_numbers, no_login_prompt) => {
   }
   
   if (no_login_prompt) {
-    document.getElementById('layers').remove();
+    var layerDiv = document.getElementById('layers')
+    
+    if (layerDiv != null) {
+      layerDiv.remove();
+    }
+    
     document.querySelector('html').style.overflow = 'scroll';
   }
 };
