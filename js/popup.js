@@ -1,6 +1,6 @@
 var noSidebar = true;
 var noNumbers = false;
-var noLoginPrompt = true;
+var noPrompt = true;
 
 var checkbox1 = document.getElementById('checkbox1');
 var label1 = document.getElementById('label1');
@@ -13,7 +13,7 @@ var label3 = document.getElementById('label3');
 
 if (label1 != null) label1.textContent = 'Hide Sidebars';
 if (label2 != null) label2.textContent = 'Hide Numbers';
-if (label3 != null) label3.textContent = 'Hide Login prompts';
+if (label3 != null) label3.textContent = 'Hide Prompts';
 
 let tab = null;
 
@@ -31,9 +31,9 @@ chrome.storage.local.get('noNumbers', (data) => {
   checkbox2.checked = noNumbers;
 });
 
-chrome.storage.local.get('noLoginPrompt', (data) => {
-  noLoginPrompt = !!data.noLoginPrompt;
-  checkbox3.checked = noLoginPrompt;
+chrome.storage.local.get('noPrompt', (data) => {
+  noPrompt = !!data.noPrompt;
+  checkbox3.checked = noPrompt;
 });
 
 if (checkbox1 != null) {
@@ -58,8 +58,8 @@ if (checkbox3 != null) {
   checkbox3.onclick = () => {
     reloadTab();
 
-    noLoginPrompt = !noLoginPrompt;
-    chrome.storage.local.set({ noLoginPrompt: noLoginPrompt });
+    noPrompt = !noPrompt;
+    chrome.storage.local.set({ noPrompt: noPrompt });
   };
 }
 
