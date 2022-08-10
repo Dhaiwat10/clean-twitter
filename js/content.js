@@ -29,13 +29,11 @@ const beginCleanup = (no_sidebar, no_numbers, no_login_prompt) => {
   // console.log('Beginning cleanup');
 
   if (no_sidebar) {
-    removeSection(['div', 'h2', 'div', 'aside', 'div'], 'Who to follow');
-    removeSection(
-      ['div', 'h2', 'div', 'div', 'div', 'div'],
-      'What’s happening'
-    );
-    removeSection(['div', 'h2', 'div', 'aside', 'div'], 'You might like');
-    removeSection(['div', 'h2', 'div', 'aside', 'div'], 'Relevant people');
+    var trendsSidebar = document.querySelector('[aria-label="Trends"]');
+    
+    if (trendsSidebar != null) {
+      trendsSidebar.remove();
+    }
     removeFooter();
   }
 

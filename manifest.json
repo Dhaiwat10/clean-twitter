@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Better Clean Twitter",
   "description": "Remove all the annoying clutter from your Twitter.",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "icons": {
     "16": "icon.png",
     "32": "icon.png"
@@ -10,7 +10,7 @@
   "content_scripts": [
     {
       "matches": ["https://twitter.com/*"],
-      "js": ["js/jquery.js", "js/content.js", "js/popup.js"]
+      "js": ["js/jquery.js", "js/content.js"]
     }
   ],
   "action": {
@@ -18,6 +18,6 @@
     "default_title": "Better Clean Twitter",
     "default_popup": "popup.html"
   },
-  "permissions": ["activeTab", "storage", "tabs"],
+  "permissions": ["activeTab", "storage", "tabs", "scripting"],
   "host_permissions": [ "*://twitter.com/*" ]
 }

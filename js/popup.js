@@ -1,6 +1,6 @@
-var noSidebar = true; //enabled by default
-var noNumbers = false; //disabled by default
-var noLoginPrompt = false; //disabled by default
+var noSidebar = true;
+var noNumbers = false;
+var noLoginPrompt = true;
 
 var checkbox1 = document.getElementById('checkbox1');
 var label1 = document.getElementById('label1');
@@ -17,8 +17,8 @@ if (label3 != null) label3.textContent = 'Hide Login prompts';
 
 let tab = null;
 
-chrome.tabs.query({ currentWindow: true, active: true }, function (tabArray) {
-  tab = tabArray[0];
+chrome.tabs.query({ currentWindow: true, active: true }, tabs => {
+  tab = tabs[0];
 });
 
 chrome.storage.local.get('noSidebar', (data) => {
@@ -63,13 +63,19 @@ if (checkbox3 != null) {
   };
 }
 
+function reloadCall() {
+  window.location.reload();
+}
+
 function reloadTab() {
-  const code = 'window.location.reload();';
 
   const hostname = getDomain(tab.url);
 
   if (hostname === 'twitter.com') {
-    chrome.tabs.executeScript(tab.id, { code: code });
+    chrome.scripting.executeScript({
+      target: {tabId: tab.id},
+      func: reloadCall
+    });
   }
 }
 
