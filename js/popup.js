@@ -11,9 +11,9 @@ var label2 = document.getElementById('label2');
 var checkbox3 = document.getElementById('checkbox3');
 var label3 = document.getElementById('label3');
 
-label1.textContent = 'Hide Sidebars';
-label2.textContent = 'Hide Numbers';
-label3.textContent = 'Hide Login prompts';
+if (label1 != null) label1.textContent = 'Hide Sidebars';
+if (label2 != null) label2.textContent = 'Hide Numbers';
+if (label3 != null) label3.textContent = 'Hide Login prompts';
 
 let tab = null;
 
@@ -36,26 +36,32 @@ chrome.storage.local.get('noLoginPrompt', (data) => {
   checkbox3.checked = noLoginPrompt;
 });
 
-checkbox1.onclick = () => {
-  reloadTab();
+if (checkbox1 != null) {
+  checkbox1.onclick = () => {
+    reloadTab();
 
-  noSidebar = !noSidebar;
-  chrome.storage.local.set({ noSidebar: noSidebar });
-};
+    noSidebar = !noSidebar;
+    chrome.storage.local.set({ noSidebar: noSidebar });
+  };
+}
 
-checkbox2.onclick = () => {
-  reloadTab();
+if (checkbox2 != null) {
+  checkbox2.onclick = () => {
+    reloadTab();
 
-  noNumbers = !noNumbers;
-  chrome.storage.local.set({ noNumbers: noNumbers });
-};
+    noNumbers = !noNumbers;
+    chrome.storage.local.set({ noNumbers: noNumbers });
+  };
+}
 
-checkbox3.onclick = () => {
-  reloadTab();
+if (checkbox3 != null) {
+  checkbox3.onclick = () => {
+    reloadTab();
 
-  noLoginPrompt = !noLoginPrompt;
-  chrome.storage.local.set({ noLoginPrompt: noLoginPrompt });
-};
+    noLoginPrompt = !noLoginPrompt;
+    chrome.storage.local.set({ noLoginPrompt: noLoginPrompt });
+  };
+}
 
 function reloadTab() {
   const code = 'window.location.reload();';
