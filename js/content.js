@@ -45,7 +45,9 @@ const beginCleanup = (no_sidebar, no_numbers, no_login_prompt) => {
   
   if (no_login_prompt) {
     document.getElementById('layers').remove();
-    document.querySelector('html').style.overflow = 'default';
+    document.querySelector('html').style.overflow = 'scroll';
+    document.querySelector('html').style.overscroll-behavior-y = 'none';
+    document.querySelector('html').style.overscroll-y = 'scroll';
   }
 };
 
