@@ -31,7 +31,7 @@ chrome.storage.local.get('noNumbers', (data) => {
   checkbox2.checked = noNumbers;
 });
 
-chrome.storage.local.get('noLoginPromt', (data) => {
+chrome.storage.local.get('noLoginPrompt', (data) => {
   noLoginPrompt = !!data.noLoginPrompt;
   checkbox3.checked = noLoginPrompt;
 });
