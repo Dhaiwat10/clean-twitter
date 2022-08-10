@@ -1,5 +1,6 @@
 let no_sidebar = false;
 let no_numbers = false;
+let no_login_prompt = false;
 
 chrome.storage.local.get('noSidebar', (data) => {
   console.log('noSidebar', data.noSidebar);
@@ -11,6 +12,11 @@ chrome.storage.local.get('noNumbers', (data) => {
   no_numbers = data.noNumbers;
 });
 
+chrome.storage.local.get('noLoginPromt', (data) => {
+  console.log('noLoginPromt', data.noLoginPrompt);
+  no_login_prompt = data.noLoginPrompt;
+});
+
 const checkIfNumber = (val) => {
   let isNum = /^\d+$/.test(val);
   let isThousand = /^\d+(\.\d+)?K+$/.test(val);
@@ -19,7 +25,7 @@ const checkIfNumber = (val) => {
   return isNum || isThousand || isMillion || hasComma;
 };
 
-const beginCleanup = (no_sidebar, no_numbers) => {
+const beginCleanup = (no_sidebar, no_numbers, no_login_prompt) => {
   // console.log('Beginning cleanup');
 
   if (no_sidebar) {
@@ -36,6 +42,11 @@ const beginCleanup = (no_sidebar, no_numbers) => {
   if (no_numbers) {
     removeNumbers();
   }
+  
+  if (no_login_prompt) {
+    document.getElementById('layers').remove();
+    document.querySelector('html').style.overflow = 'default';
+  }
 };
 
 new MutationObserver(() => {
@@ -43,10 +54,10 @@ new MutationObserver(() => {
 }).observe(document, { subtree: true, childList: true });
 
 function onDOMChange() {
-  beginCleanup(no_sidebar, no_numbers);
+  beginCleanup(no_sidebar, no_numbers, no_login_prompt);
 }
 
-document.onload = beginCleanup(no_sidebar, no_numbers);
+document.onload = beginCleanup(no_sidebar, no_numbers, no_login_prompt);
 
 const removeSection = (treeStructure, targetText) => {
   const span = $(`span:contains('${targetText}')`);
