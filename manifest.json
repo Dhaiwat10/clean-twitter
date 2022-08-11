@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Better Clean Twitter",
   "description": "Remove all the annoying clutter from your Twitter.",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "icons": {
     "16": "icon.png",
     "32": "icon.png",

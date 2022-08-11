@@ -2,18 +2,18 @@ let no_sidebar = false;
 let no_numbers = false;
 let no_prompt = false;
 
-chrome.storage.local.get('noSidebar', (data) => {
-  console.log('noSidebar', data.noSidebar);
+chrome.storage.local.get("noSidebar", (data) => {
+  console.log("noSidebar", data.noSidebar);
   no_sidebar = data.noSidebar;
 });
 
-chrome.storage.local.get('noNumbers', (data) => {
-  console.log('noNumbers', data.noNumbers);
+chrome.storage.local.get("noNumbers", (data) => {
+  console.log("noNumbers", data.noNumbers);
   no_numbers = data.noNumbers;
 });
 
-chrome.storage.local.get('noPrompt', (data) => {
-  console.log('noPrompt', data.noPrompt);
+chrome.storage.local.get("noPrompt", (data) => {
+  console.log("noPrompt", data.noPrompt);
   no_prompt = data.noPrompt;
 });
 
@@ -41,18 +41,75 @@ const beginCleanup = (no_sidebar, no_numbers, no_prompt) => {
 
   if (no_sidebar) {
     if (innerSidebar != null) {
+      if (innerSidebar.children.length >= 3) {
+        var relevantPeople = innerSidebar.children.item(2);
+
+        if (relevantPeople != null) {
+          var innerRelevantChildren = relevantPeople.children;
+
+          if (
+            innerRelevantChildren != null &&
+            innerRelevantChildren.length >= 1
+          ) {
+            var innerRelevantChild = innerRelevantChildren.item(0);
+
+            if (
+              innerRelevantChild != null &&
+              innerRelevantChild.tagName == "ASIDE"
+            ) {
+              relevantPeople.remove();
+              deletedRelevantPeople = true;
+            }
+          }
+        }
+      }
+
       if (innerSidebar.children.length >= 4) {
         var relevantPeople = innerSidebar.children.item(3);
 
         if (relevantPeople != null) {
           var innerRelevantChildren = relevantPeople.children;
 
-          if (innerRelevantChildren != null && innerRelevantChildren.length >= 1) {
+          if (
+            innerRelevantChildren != null &&
+            innerRelevantChildren.length >= 1
+          ) {
             var innerRelevantChild = innerRelevantChildren.item(0);
 
-            if (innerRelevantChild != null && innerRelevantChild.tagName == 'ASIDE') {
+            if (
+              innerRelevantChild != null &&
+              innerRelevantChild.tagName == "ASIDE"
+            ) {
               relevantPeople.remove();
               deletedRelevantPeople = true;
+            }
+          }
+        }
+      }
+
+      if (innerSidebar.children.length >= 3) {
+        var trendsForYou = innerSidebar.children.item(2);
+
+        if (trendsForYou != null) {
+          var innertrendsForYouChildren = trendsForYou.children;
+
+          if (
+            innertrendsForYouChildren != null &&
+            innertrendsForYouChildren.length >= 1
+          ) {
+            var innertrendsForYouChild = innertrendsForYouChildren.item(0);
+
+            if (innertrendsForYouChild != null) {
+              if (innertrendsForYouChild.children.length >= 1) {
+                var innerTrendsForYouChild2 =
+                  innertrendsForYouChild.children.item(0);
+                if (
+                  innerTrendsForYouChild2 != null &&
+                  innerTrendsForYouChild2.tagName == "SECTION"
+                ) {
+                  trendsForYou.remove();
+                }
+              }
             }
           }
         }
@@ -64,37 +121,65 @@ const beginCleanup = (no_sidebar, no_numbers, no_prompt) => {
         if (trendsForYou != null) {
           var innertrendsForYouChildren = trendsForYou.children;
 
-          if (innertrendsForYouChildren != null && innertrendsForYouChildren.length >= 1) {
+          if (
+            innertrendsForYouChildren != null &&
+            innertrendsForYouChildren.length >= 1
+          ) {
             var innertrendsForYouChild = innertrendsForYouChildren.item(0);
 
             if (innertrendsForYouChild != null) {
               if (innertrendsForYouChild.children.length >= 1) {
-                var innerTrendsForYouChild2 = innertrendsForYouChild.children.item(0);
-                if (innerTrendsForYouChild2 != null && innerTrendsForYouChild2.tagName == 'SECTION') {
+                var innerTrendsForYouChild2 =
+                  innertrendsForYouChild.children.item(0);
+                if (
+                  innerTrendsForYouChild2 != null &&
+                  innerTrendsForYouChild2.tagName == "SECTION"
+                ) {
                   trendsForYou.remove();
                 }
               }
             }
           }
         }
-      } else {
-        if (innerSidebar.children.length >= 5) {
-          var trendsForYou = innerSidebar.children.item(4);
+      }
 
-          if (trendsForYou != null) {
-            var innertrendsForYouChildren = trendsForYou.children;
-  
-            if (innertrendsForYouChildren != null && innertrendsForYouChildren.length >= 1) {
-              var innertrendsForYouChild = innertrendsForYouChildren.item(0);
-  
-              if (innertrendsForYouChild != null) {
-                if (innertrendsForYouChild.children.length >= 1) {
-                  var innerTrendsForYouChild2 = innertrendsForYouChild.children.item(0);
-                  if (innerTrendsForYouChild2 != null && innerTrendsForYouChild2.tagName == 'SECTION') {
-                    trendsForYou.remove();
-                  }
+      if (innerSidebar.children.length >= 5) {
+        var trendsForYou = innerSidebar.children.item(4);
+
+        if (trendsForYou != null) {
+          var innertrendsForYouChildren = trendsForYou.children;
+
+          if (
+            innertrendsForYouChildren != null &&
+            innertrendsForYouChildren.length >= 1
+          ) {
+            var innertrendsForYouChild = innertrendsForYouChildren.item(0);
+
+            if (innertrendsForYouChild != null) {
+              if (innertrendsForYouChild.children.length >= 1) {
+                var innerTrendsForYouChild2 =
+                  innertrendsForYouChild.children.item(0);
+                if (
+                  innerTrendsForYouChild2 != null &&
+                  innerTrendsForYouChild2.tagName == "SECTION"
+                ) {
+                  trendsForYou.remove();
                 }
               }
+            }
+          }
+        }
+      }
+
+      if (innerSidebar.children.length > 0) {
+        var copyrightNotice = innerSidebar.children.item(
+          innerSidebar.children.length - 1
+        );
+        if (copyrightNotice != null) {
+          if (copyrightNotice.children.length >= 1) {
+            var innercopyright = copyrightNotice.children.item(0);
+            if (innercopyright != null && innercopyright.tagName == "NAV") {
+              copyrightNotice.remove();
             }
           }
         }
@@ -107,13 +192,13 @@ const beginCleanup = (no_sidebar, no_numbers, no_prompt) => {
   if (no_numbers) {
     removeNumbers();
   }
-  
+
   if (no_prompt) {
-    var layerDiv = document.getElementById('layers')
-    
+    var layerDiv = document.getElementById("layers");
+
     if (layerDiv != null) {
       var loginBar = layerDiv.querySelector('[data-testid="BottomBar"]');
-      
+
       if (loginBar != null) {
         loginBar.remove();
       }
@@ -136,13 +221,13 @@ const beginCleanup = (no_sidebar, no_numbers, no_prompt) => {
         if (innerChildren != null && innerChildren.length >= 1) {
           var innerChild = innerChildren.item(0);
 
-          if (innerChild != null && innerChild.tagName == 'SECTION') {
+          if (innerChild != null && innerChild.tagName == "SECTION") {
             registerPrompt.remove();
           }
         }
       }
     }
-    document.querySelector('html').style.overflow = 'scroll';
+    document.querySelector("html").style.overflow = "scroll";
   }
 };
 
@@ -174,13 +259,13 @@ const removeSection = (treeStructure, targetText) => {
 
 const removeNumbers = () => {
   const likesEl = $(
-    '.css-901oao, .css-16my406, .r-poiln3, .r-bcqeeo, .r-qvutc0'
+    ".css-901oao, .css-16my406, .r-poiln3, .r-bcqeeo, .r-qvutc0"
   );
 
   for (let item of likesEl) {
     const { nodeName: tag } = item;
 
-    if (tag === 'SPAN') {
+    if (tag === "SPAN") {
       const innerText = $(item).html();
 
       if (checkIfNumber(innerText)) {
@@ -192,7 +277,7 @@ const removeNumbers = () => {
 };
 
 const removeFooter = () => {
-  const navElement = $('[aria-label=Footer]');
+  const navElement = $("[aria-label=Footer]");
 
   navElement.remove();
 };
