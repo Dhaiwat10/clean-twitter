@@ -1,6 +1,7 @@
 var noSidebar = true;
 var noNumbers = false;
 var noPrompt = true;
+var noAdvertisment = true;
 
 var checkbox1 = document.getElementById('checkbox1');
 var label1 = document.getElementById('label1');
@@ -11,9 +12,13 @@ var label2 = document.getElementById('label2');
 var checkbox3 = document.getElementById('checkbox3');
 var label3 = document.getElementById('label3');
 
+var checkbox4 = document.getElementById('checkbox4');
+var label4 = document.getElementById('label4');
+
 if (label1 != null) label1.textContent = 'Hide Sidebars';
 if (label2 != null) label2.textContent = 'Hide Numbers';
 if (label3 != null) label3.textContent = 'Hide Prompts';
+if (label4 != null) label4.textContent = 'Hide sponsored Tweets';
 
 let tab = null;
 
@@ -34,6 +39,11 @@ chrome.storage.local.get('noNumbers', (data) => {
 chrome.storage.local.get('noPrompt', (data) => {
   noPrompt = !!data.noPrompt;
   checkbox3.checked = noPrompt;
+});
+
+chrome.storage.local.get('noAdvertisment', (data) => {
+  noAdvertisment = !!data.noAdvertisment;
+  checkbox4.checked = noAdvertisment;
 });
 
 if (checkbox1 != null) {
@@ -60,6 +70,15 @@ if (checkbox3 != null) {
 
     noPrompt = !noPrompt;
     chrome.storage.local.set({ noPrompt: noPrompt });
+  };
+}
+
+if (checkbox4 != null) {
+  checkbox4.onclick = () => {
+    reloadTab();
+
+    noAdvertisment = !noAdvertisment;
+    chrome.storage.local.set({ noAdvertisment: noAdvertisment });
   };
 }
 

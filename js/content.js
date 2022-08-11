@@ -1,6 +1,7 @@
 let no_sidebar = false;
 let no_numbers = false;
 let no_prompt = false;
+let no_advertisment = false;
 
 chrome.storage.local.get("noSidebar", (data) => {
   console.log("noSidebar", data.noSidebar);
@@ -15,6 +16,11 @@ chrome.storage.local.get("noNumbers", (data) => {
 chrome.storage.local.get("noPrompt", (data) => {
   console.log("noPrompt", data.noPrompt);
   no_prompt = data.noPrompt;
+});
+
+chrome.storage.local.get("noAdvertisment", (data) => {
+  console.log("noAdvertisment", data.noAdvertisment);
+  no_advertisment = data.noAdvertisment;
 });
 
 const checkIfNumber = (val) => {
@@ -227,7 +233,18 @@ const beginCleanup = (no_sidebar, no_numbers, no_prompt) => {
         }
       }
     }
-    document.querySelector("html").style.overflow = "scroll";
+    var htmlObject = document.querySelector("html");
+    htmlObject.style.removeProperty('overflow')
+    htmlObject.style.setProperty('overflow-y', 'scroll');
+    htmlObject.style.setProperty('overflow-behavior-y', 'none')
+  }
+
+  if (no_advertisment) {
+    var articleList = document.querySelectorAll('[data-testid="placementTracking"]');
+    for (let index = 0; index < articleList.length; ++index) {
+        var article = articleList.item(index);
+        article.remove();
+    }
   }
 };
 
