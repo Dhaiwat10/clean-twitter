@@ -4,6 +4,8 @@ Removes all the bullshit clutter from Twitter
 
 [Click here to install the original extension](https://chrome.google.com/webstore/detail/clean-twitter/ibcjnfhpdjinbcmojnmpnokcgfljiebb)
 
+## Installation
+[Read this](https://dev.to/ben/how-to-install-chrome-extensions-manually-from-github-1612)
 
 ## What changes?
 Thats a good question!
