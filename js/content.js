@@ -28,12 +28,79 @@ const checkIfNumber = (val) => {
 const beginCleanup = (no_sidebar, no_numbers, no_prompt) => {
   // console.log('Beginning cleanup');
 
-  if (no_sidebar) {
-    var trendsSidebar = document.querySelector('[aria-label="Trends"]');
-    
-    if (trendsSidebar != null) {
-      trendsSidebar.remove();
+  var sideBar = document.querySelector('[aria-label="Trends"]');
+
+  var innerSidebar = null;
+
+  if (sideBar != null) {
+    var sideBarChildren = sideBar.children;
+    if (sideBarChildren != null && sideBarChildren.length >= 0) {
+      innerSidebar = sideBarChildren.item(0);
     }
+  }
+
+  if (no_sidebar) {
+    if (innerSidebar != null) {
+      if (innerSidebar.children.length >= 4) {
+        var relevantPeople = innerSidebar.children.item(3);
+
+        if (relevantPeople != null) {
+          var innerRelevantChildren = relevantPeople.children;
+
+          if (innerRelevantChildren != null && innerRelevantChildren.length >= 1) {
+            var innerRelevantChild = innerRelevantChildren.item(0);
+
+            if (innerRelevantChild != null && innerRelevantChild.tagName == 'ASIDE') {
+              relevantPeople.remove();
+              deletedRelevantPeople = true;
+            }
+          }
+        }
+      }
+
+      if (innerSidebar.children.length >= 4) {
+        var trendsForYou = innerSidebar.children.item(3);
+
+        if (trendsForYou != null) {
+          var innertrendsForYouChildren = trendsForYou.children;
+
+          if (innertrendsForYouChildren != null && innertrendsForYouChildren.length >= 1) {
+            var innertrendsForYouChild = innertrendsForYouChildren.item(0);
+
+            if (innertrendsForYouChild != null) {
+              if (innertrendsForYouChild.children.length >= 1) {
+                var innerTrendsForYouChild2 = innertrendsForYouChild.children.item(0);
+                if (innerTrendsForYouChild2 != null && innerTrendsForYouChild2.tagName == 'SECTION') {
+                  trendsForYou.remove();
+                }
+              }
+            }
+          }
+        }
+      } else {
+        if (innerSidebar.children.length >= 5) {
+          var trendsForYou = innerSidebar.children.item(4);
+
+          if (trendsForYou != null) {
+            var innertrendsForYouChildren = trendsForYou.children;
+  
+            if (innertrendsForYouChildren != null && innertrendsForYouChildren.length >= 1) {
+              var innertrendsForYouChild = innertrendsForYouChildren.item(0);
+  
+              if (innertrendsForYouChild != null) {
+                if (innertrendsForYouChild.children.length >= 1) {
+                  var innerTrendsForYouChild2 = innertrendsForYouChild.children.item(0);
+                  if (innerTrendsForYouChild2 != null && innerTrendsForYouChild2.tagName == 'SECTION') {
+                    trendsForYou.remove();
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
     removeFooter();
   }
 
@@ -45,9 +112,36 @@ const beginCleanup = (no_sidebar, no_numbers, no_prompt) => {
     var layerDiv = document.getElementById('layers')
     
     if (layerDiv != null) {
-      layerDiv.remove();
+      var loginBar = layerDiv.querySelector('[data-testid="BottomBar"]');
+      
+      if (loginBar != null) {
+        loginBar.remove();
+      }
+
+      var loginPrompt = layerDiv.querySelector('[data-testid="sheetDialog"]');
+      if (loginPrompt != null) {
+        var loginPromptParent = loginPrompt.parentElement;
+        if (loginPromptParent != null) {
+          loginPromptParent.remove();
+        }
+      }
     }
-    
+
+    if (innerSidebar != null && innerSidebar.children.length >= 2) {
+      var registerPrompt = innerSidebar.children.item(2);
+
+      if (registerPrompt != null) {
+        var innerChildren = registerPrompt.children;
+
+        if (innerChildren != null && innerChildren.length >= 1) {
+          var innerChild = innerChildren.item(0);
+
+          if (innerChild != null && innerChild.tagName == 'SECTION') {
+            registerPrompt.remove();
+          }
+        }
+      }
+    }
     document.querySelector('html').style.overflow = 'scroll';
   }
 };
