@@ -11,8 +11,13 @@
   },
   "content_scripts": [
     {
-      "matches": ["https://twitter.com/*"],
-      "js": ["js/jquery.js", "js/content.js"]
+      "matches": [
+        "https://twitter.com/*"
+      ],
+      "js": [
+        "js/jquery.js",
+        "js/content.js"
+      ]
     }
   ],
   "action": {
@@ -20,6 +25,13 @@
     "default_title": "Better Clean Twitter",
     "default_popup": "popup.html"
   },
-  "permissions": ["activeTab", "storage", "tabs", "scripting"],
-  "host_permissions": [ "*://twitter.com/*" ]
+  "permissions": [
+    "activeTab",
+    "storage",
+    "tabs",
+    "scripting"
+  ],
+  "host_permissions": [
+    "*://twitter.com/*"
+  ]
 }

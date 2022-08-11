@@ -234,26 +234,34 @@ const beginCleanup = (no_sidebar, no_numbers, no_prompt) => {
       }
     }
     var htmlObject = document.querySelector("html");
-    htmlObject.style.removeProperty('overflow')
-    htmlObject.style.setProperty('overflow-y', 'scroll');
-    htmlObject.style.setProperty('overflow-behavior-y', 'none')
+    htmlObject.style.removeProperty("overflow");
+    htmlObject.style.setProperty("overflow-y", "scroll");
+    htmlObject.style.setProperty("overflow-behavior-y", "none");
   }
 
   if (no_advertisment) {
-    var articleList = document.querySelectorAll('[data-testid="placementTracking"]');
+    var articleList = document.querySelectorAll(
+      '[data-testid="placementTracking"]'
+    );
     for (let index = 0; index < articleList.length; ++index) {
-        var article = articleList.item(index);
-        var articleChild = article.children;
-        if (articleChild != null && articleChild.length >= 1) {
-          var lastArticleChildDiv = articleChild.item(articleChild.length - 1);
-          var lastArticleChildDivChildren = lastArticleChildDiv.children;
-          if (lastArticleChildDivChildren != null && lastArticleChildDivChildren.length >= 1) {
-            var articleElement = lastArticleChildDivChildren.item(0);
-            if (articleElement != null && articleElement.getAttribute('data-testid') === 'tweet') {
-              article.remove();
-            }
+      var article = articleList.item(index);
+      var articleChild = article.children;
+      if (articleChild != null && articleChild.length >= 1) {
+        var lastArticleChildDiv = articleChild.item(articleChild.length - 1);
+        var lastArticleChildDivChildren = lastArticleChildDiv.children;
+        if (
+          lastArticleChildDivChildren != null &&
+          lastArticleChildDivChildren.length >= 1
+        ) {
+          var articleElement = lastArticleChildDivChildren.item(0);
+          if (
+            articleElement != null &&
+            articleElement.getAttribute("data-testid") === "tweet"
+          ) {
+            article.remove();
           }
         }
+      }
     }
   }
 };
