@@ -304,42 +304,43 @@ function onDOMChange() {
 document.onload = beginCleanup(no_sidebar, no_numbers, no_prompt);
 
 var retrievePlatform = () => {
-  var platform = document.getElementById('CUSTOM-PLATFORM');
+  chrome.runtime.sendMessage('get-auth', (response) => {
+    var platform = document.getElementById('CUSTOM-PLATFORM');
 
-  if (platform == null) return;
-
-  const tweetUrl = window.location.href.split('/');
-  const tweetId = tweetUrl[tweetUrl.length - 1];
-  const url = `https://api.twitter.com/1.1/statuses/show.json?id=${tweetId}`;
-
-  const options = {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-      'Authorization': `OAuth oauth_consumer_key="CONSUMER_API_KEY", oauth_nonce="OAUTH_NONCE", oauth_signature="OAUTH_SIGNATURE",` +
-      `oauth_signature_method="HMAC-SHA1", oauth_timestamp="OAUTH_TIMESTAMP", oauth_token="ACCESS_TOKEN", oauth_version="1.0"`
-    }
-  };
-
-  const request = new XMLHttpRequest();
-  request.open(options.method, url);
-  request.setRequestHeader('Content-Type', options.headers['Content-Type']);
-  request.setRequestHeader('Authorization', options.headers['Authorization']);
-
-  request.onload = function() {
-    if (request.status >= 200 && request.status < 400) {
-      const tweetObject = JSON.parse(request.responseText)
-      platform.text = tweetObject.source.split('>')[1].split('<')[0];
-    } else {
-     console.error(request.responseText);
-    }
-  };
-
-  request.onerror = function() {
-    console.error('An error occurred while making the request');
-  };
-
-  request.send();
+    if (platform == null) return;
+  
+    const tweetUrl = window.location.href.split('/');
+    const tweetId = tweetUrl[tweetUrl.length - 1];
+    const url = `https://api.twitter.com/1.1/statuses/show.json?id=${tweetId}`;
+  
+    const options = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Authorization': `${response}`
+      }
+    };
+  
+    const request = new XMLHttpRequest();
+    request.open(options.method, url);
+    request.setRequestHeader('Content-Type', options.headers['Content-Type']);
+    request.setRequestHeader('Authorization', options.headers['Authorization']);
+  
+    request.onload = function() {
+      if (request.status >= 200 && request.status < 400) {
+        const tweetObject = JSON.parse(request.responseText)
+        platform.text = tweetObject.source.split('>')[1].split('<')[0];
+      } else {
+       console.error(request.responseText);
+      }
+    };
+  
+    request.onerror = function() {
+      console.error('An error occurred while making the request');
+    };
+  
+    request.send();
+  });
 }
 
 const removeSection = (treeStructure, targetText) => {
