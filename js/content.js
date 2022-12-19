@@ -1,7 +1,8 @@
 let no_sidebar = false;
 let no_numbers = false;
-let no_prompt = false;
-let no_advertisment = false;
+let no_prompt = true;
+let no_advertisment = true;
+let showPlatform = false;
 
 chrome.storage.local.get("noSidebar", (data) => {
   console.log("noSidebar", data.noSidebar);
@@ -21,6 +22,11 @@ chrome.storage.local.get("noPrompt", (data) => {
 chrome.storage.local.get("noAdvertisment", (data) => {
   console.log("noAdvertisment", data.noAdvertisment);
   no_advertisment = data.noAdvertisment;
+});
+
+chrome.storage.local.get("showPlatform", (data) => {
+  console.log("showPlatform", data.showPlatform);
+  showPlatform = data.showPlatform;
 });
 
 const checkIfNumber = (val) => {
@@ -264,6 +270,27 @@ const beginCleanup = (no_sidebar, no_numbers, no_prompt) => {
       }
     }
   }
+
+  if (showPlatform) {
+    let dateOnTweet = document.querySelector('[class="css-1dbjc4n r-1r5su4o"');
+
+    if (dateOnTweet != null && dateOnTweet.childElementCount > 0) {
+      let rightDiv = dateOnTweet.firstChild;
+      if (rightDiv.childElementCount > 0) {
+        rightDiv = rightDiv.firstChild;
+        if (rightDiv.childElementCount == 1) {
+          let platform = document.createElement('a');
+          platform.id = 'CUSTOM-PLATFORM';
+          platform.href = "https://ree6.de";
+          platform.setAttribute('role', 'link')
+          platform.classList.add('css-4rbku5', 'css-18t94o4', 'css-901oao', 'css-16my406');
+          platform.setAttribute('style', 'color: rgb(29, 155, 240); margin-left: 5px;');
+          rightDiv.appendChild(platform);
+          retrievePlatform();
+        }
+      }
+    }
+  }
 };
 
 new MutationObserver(() => {
@@ -275,6 +302,45 @@ function onDOMChange() {
 }
 
 document.onload = beginCleanup(no_sidebar, no_numbers, no_prompt);
+
+var retrievePlatform = () => {
+  var platform = document.getElementById('CUSTOM-PLATFORM');
+
+  if (platform == null) return;
+
+  const tweetUrl = window.location.href.split('/');
+  const tweetId = tweetUrl[tweetUrl.length - 1];
+  const url = `https://api.twitter.com/1.1/statuses/show.json?id=${tweetId}`;
+
+  const options = {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': `OAuth oauth_consumer_key="CONSUMER_API_KEY", oauth_nonce="OAUTH_NONCE", oauth_signature="OAUTH_SIGNATURE",` +
+      `oauth_signature_method="HMAC-SHA1", oauth_timestamp="OAUTH_TIMESTAMP", oauth_token="ACCESS_TOKEN", oauth_version="1.0"`
+    }
+  };
+
+  const request = new XMLHttpRequest();
+  request.open(options.method, url);
+  request.setRequestHeader('Content-Type', options.headers['Content-Type']);
+  request.setRequestHeader('Authorization', options.headers['Authorization']);
+
+  request.onload = function() {
+    if (request.status >= 200 && request.status < 400) {
+      const tweetObject = JSON.parse(request.responseText)
+      platform.text = tweetObject.source.split('>')[1].split('<')[0];
+    } else {
+     console.error(request.responseText);
+    }
+  };
+
+  request.onerror = function() {
+    console.error('An error occurred while making the request');
+  };
+
+  request.send();
+}
 
 const removeSection = (treeStructure, targetText) => {
   const span = $(`span:contains('${targetText}')`);
