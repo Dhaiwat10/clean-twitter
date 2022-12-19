@@ -305,12 +305,26 @@ document.onload = beginCleanup(no_sidebar, no_numbers, no_prompt);
 
 var retrievePlatform = () => {
   chrome.runtime.sendMessage('get-auth', (response) => {
+    if (response == null) {
+      console.log('Received null Token!')
+      return;
+    }
+
     var platform = document.getElementById('CUSTOM-PLATFORM');
 
-    if (platform == null) return;
-  
+    if (platform == null) {
+      console.log('No Platform Element!')
+      return;
+    }
+
     const tweetUrl = window.location.href.split('/');
+
     const tweetId = tweetUrl[tweetUrl.length - 1];
+
+    if (tweetId.includes('?')) {
+      tweetId = tweetId.split('?')[0]
+    }
+
     const url = `https://api.twitter.com/1.1/statuses/show.json?id=${tweetId}`;
   
     const options = {
@@ -331,12 +345,13 @@ var retrievePlatform = () => {
         const tweetObject = JSON.parse(request.responseText)
         platform.text = tweetObject.source.split('>')[1].split('<')[0];
       } else {
-       console.error(request.responseText);
+        console.error(request.responseText);
       }
     };
   
-    request.onerror = function() {
-      console.error('An error occurred while making the request');
+    request.onerror = function(error) {
+      console.error(`An error occurred while making the request!`);
+      console.error(error.type + '-' + error.loaded);
     };
   
     request.send();

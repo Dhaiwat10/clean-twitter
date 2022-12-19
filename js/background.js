@@ -3,9 +3,8 @@ let token = null;
 chrome.webRequest.onSendHeaders.addListener(function (details) {
 
     details.requestHeaders.forEach((header, index) => {
-        if (header.name == 'authorization') {
+        if (header.name == 'authorization' || header.name == 'Authorization') {
             token = header.value;
-            console.log(token);
         }
     });
     
@@ -14,6 +13,11 @@ chrome.webRequest.onSendHeaders.addListener(function (details) {
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (message === 'get-auth') {
-      sendResponse(token);
+        if (token == null) {
+            console.log('Null Token')
+            sendResponse('NULL-TOKEN')
+        }
+
+        sendResponse(token);
     }
 });
