@@ -3,27 +3,14 @@ var noNumbers = false;
 var noPrompt = true;
 var noAdvertisment = true;
 var showPlatform = false;
+var noTwitterBlue = true;
 
-var checkbox1 = document.getElementById('checkbox1');
-var label1 = document.getElementById('label1');
-
-var checkbox2 = document.getElementById('checkbox2');
-var label2 = document.getElementById('label2');
-
-var checkbox3 = document.getElementById('checkbox3');
-var label3 = document.getElementById('label3');
-
-var checkbox4 = document.getElementById('checkbox4');
-var label4 = document.getElementById('label4');
-
-var checkbox5 = document.getElementById('checkbox5');
-var label5 = document.getElementById('label5');
-
-if (label1 != null) label1.textContent = 'Hide Sidebars';
-if (label2 != null) label2.textContent = 'Hide Numbers';
-if (label3 != null) label3.textContent = 'Hide Prompts';
-if (label4 != null) label4.textContent = 'Hide sponsored Tweets';
-if (label5 != null) label5.textContent = 'Show Platform';
+var sideBarCheck = document.getElementById('sidebar');
+var numberCheck = document.getElementById('number');
+var promptCheck = document.getElementById('prompt');
+var sponsoredCheck = document.getElementById('sponsored');
+var platformCheck = document.getElementById('platform');
+var twitterBlueCheck = document.getElementById('twitterBlue');
 
 let tab = null;
 
@@ -33,71 +20,85 @@ chrome.tabs.query({ currentWindow: true, active: true }, tabs => {
 
 chrome.storage.local.get('noSidebar', (data) => {
   noSidebar = !!data.noSidebar;
-  checkbox1.checked = noSidebar;
+  sideBarCheck.checked = noSidebar;
 });
 
 chrome.storage.local.get('noNumbers', (data) => {
   noNumbers = !!data.noNumbers;
-  checkbox2.checked = noNumbers;
+  numberCheck.checked = noNumbers;
 });
 
 chrome.storage.local.get('noPrompt', (data) => {
   noPrompt = !!data.noPrompt;
-  checkbox3.checked = noPrompt;
+  promptCheck.checked = noPrompt;
 });
 
 chrome.storage.local.get('noAdvertisment', (data) => {
   noAdvertisment = !!data.noAdvertisment;
-  checkbox4.checked = noAdvertisment;
+  sponsoredCheck.checked = noAdvertisment;
 });
 
 chrome.storage.local.get('showPlatform', (data) => {
   showPlatform = !!data.showPlatform;
-  checkbox5.checked = showPlatform;
+  platformCheck.checked = showPlatform;
 });
 
-if (checkbox1 != null) {
-  checkbox1.onclick = () => {
-    reloadTab();
+chrome.storage.local.get('noTwitterBlue', (data) => {
+  noTwitterBlue = !!data.noTwitterBlue;
+  twitterBlueCheck.checked = noTwitterBlue;
+});
 
-    noSidebar = !noSidebar;
-    chrome.storage.local.set({ noSidebar: noSidebar });
+if (sideBarCheck != null) {
+  sideBarCheck.onclick = () => {
+  reloadTab();
+
+  noSidebar = !noSidebar;
+  chrome.storage.local.set({ noSidebar: noSidebar });
   };
 }
 
-if (checkbox2 != null) {
-  checkbox2.onclick = () => {
-    reloadTab();
+if (numberCheck != null) {
+  numberCheck.onclick = () => {
+  reloadTab();
 
-    noNumbers = !noNumbers;
-    chrome.storage.local.set({ noNumbers: noNumbers });
+  noNumbers = !noNumbers;
+  chrome.storage.local.set({ noNumbers: noNumbers });
   };
 }
 
-if (checkbox3 != null) {
-  checkbox3.onclick = () => {
-    reloadTab();
+if (promptCheck != null) {
+  promptCheck.onclick = () => {
+  reloadTab();
 
-    noPrompt = !noPrompt;
-    chrome.storage.local.set({ noPrompt: noPrompt });
+  noPrompt = !noPrompt;
+  chrome.storage.local.set({ noPrompt: noPrompt });
   };
 }
 
-if (checkbox4 != null) {
-  checkbox4.onclick = () => {
-    reloadTab();
+if (sponsoredCheck != null) {
+  sponsoredCheck.onclick = () => {
+  reloadTab();
 
-    noAdvertisment = !noAdvertisment;
-    chrome.storage.local.set({ noAdvertisment: noAdvertisment });
+  noAdvertisment = !noAdvertisment;
+  chrome.storage.local.set({ noAdvertisment: noAdvertisment });
   };
 }
 
-if (checkbox5 != null) {
-  checkbox5.onclick = () => {
-    reloadTab();
+if (platformCheck != null) {
+  platformCheck.onclick = () => {
+  reloadTab();
 
-    showPlatform = !showPlatform;
-    chrome.storage.local.set({ showPlatform: showPlatform });
+  showPlatform = !showPlatform;
+  chrome.storage.local.set({ showPlatform: showPlatform });
+  };
+}
+
+if (twitterBlueCheck != null) {
+  twitterBlueCheck.onclick = () => {
+  reloadTab();
+
+  noTwitterBlue = !noTwitterBlue;
+  chrome.storage.local.set({ noTwitterBlue: noTwitterBlue });
   };
 }
 

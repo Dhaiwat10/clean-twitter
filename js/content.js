@@ -3,6 +3,7 @@ let no_numbers = false;
 let no_prompt = true;
 let no_advertisment = true;
 let showPlatform = false;
+var noTwitterBlue = true;
 
 chrome.storage.local.get("noSidebar", (data) => {
   console.log("noSidebar", data.noSidebar);
@@ -29,6 +30,12 @@ chrome.storage.local.get("showPlatform", (data) => {
   showPlatform = data.showPlatform;
 });
 
+chrome.storage.local.get('noTwitterBlue', (data) => {
+  console.log("noTwitterBlue", data.noTwitterBlue);
+  noTwitterBlue = !!data.noTwitterBlue;
+});
+
+
 const checkIfNumber = (val) => {
   let isNum = /^\d+$/.test(val);
   let isThousand = /^\d+(\.\d+)?K+$/.test(val);
@@ -37,8 +44,13 @@ const checkIfNumber = (val) => {
   return isNum || isThousand || isMillion || hasComma;
 };
 
-const beginCleanup = (no_sidebar, no_numbers, no_prompt) => {
+const beginCleanup = (no_sidebar, no_numbers, no_prompt, no_twitter_blue, show_platform) => {
   // console.log('Beginning cleanup');
+
+  if (no_twitter_blue) {
+    var element = document.querySelector('[href="/i/twitter_blue_sign_up"]')
+    if (element != null) element.remove();
+  }
 
   var sideBar = document.querySelector('[aria-label="Trends"]');
 
@@ -271,7 +283,14 @@ const beginCleanup = (no_sidebar, no_numbers, no_prompt) => {
     }
   }
 
-  if (showPlatform) {
+  if (show_platform) {
+    var platform = document.getElementById('CUSTOM-PLATFORM');
+
+    if (platform != null) {
+      console.log('Platform Element found!')
+      return;
+    }
+    
     let dateOnTweet = document.querySelector('[class="css-1dbjc4n r-1r5su4o"');
 
     if (dateOnTweet != null && dateOnTweet.childElementCount > 0) {
@@ -279,13 +298,19 @@ const beginCleanup = (no_sidebar, no_numbers, no_prompt) => {
       if (rightDiv.childElementCount > 0) {
         rightDiv = rightDiv.firstChild;
         if (rightDiv.childElementCount == 1) {
-          let platform = document.createElement('a');
+          rightDiv = rightDiv.firstChild;
+          var newParentDiv = document.createElement('div');
+          newParentDiv.dir = "ltr";
+          newParentDiv.id = "CUSTOM-PLATFORM-DIV"
+          newParentDiv.classList.add('css-901oao','r-1nao33i','r-37j5jr','r-a023e6','r-16dba41','r-rjixqe','r-bcqeeo','r-qvutc0');
+          platform = document.createElement('span');
           platform.id = 'CUSTOM-PLATFORM';
           platform.href = "https://ree6.de";
-          platform.setAttribute('role', 'link')
-          platform.classList.add('css-4rbku5', 'css-18t94o4', 'css-901oao', 'css-16my406');
+          platform.setAttribute('role', 'link');
+          platform.classList.add('css-901oao','css-16my406','r-poln3','r-bcqeeo','r-qvutc0');
           platform.setAttribute('style', 'color: rgb(29, 155, 240); margin-left: 5px;');
-          rightDiv.appendChild(platform);
+          rightDiv.appendChild(newParentDiv);
+          newParentDiv.appendChild(platform);
           retrievePlatform();
         }
       }
@@ -298,10 +323,10 @@ new MutationObserver(() => {
 }).observe(document, { subtree: true, childList: true });
 
 function onDOMChange() {
-  beginCleanup(no_sidebar, no_numbers, no_prompt);
+  beginCleanup(no_sidebar, no_numbers, no_prompt, noTwitterBlue, showPlatform);
 }
 
-document.onload = beginCleanup(no_sidebar, no_numbers, no_prompt);
+document.onload = beginCleanup(no_sidebar, no_numbers, no_prompt, noTwitterBlue, showPlatform);
 
 var retrievePlatform = () => {
   chrome.runtime.sendMessage('get-auth', (response) => {
@@ -343,7 +368,7 @@ var retrievePlatform = () => {
     request.onload = function() {
       if (request.status >= 200 && request.status < 400) {
         const tweetObject = JSON.parse(request.responseText)
-        platform.text = tweetObject.source.split('>')[1].split('<')[0];
+        platform.textContent = tweetObject.source.split('>')[1].split('<')[0];
       } else {
         console.error(request.responseText);
       }
