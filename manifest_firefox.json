@@ -11,7 +11,7 @@
   },
   "browser_specific_settings": {
     "gecko": {
-      "id": "firefoxDev@presti.me"
+      "id": "bct@presti.me"
     }
   },
   "content_scripts": [
