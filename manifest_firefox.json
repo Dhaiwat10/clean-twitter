@@ -1,0 +1,46 @@
+{
+  "manifest_version": 2,
+  "name": "Better Clean Twitter",
+  "description": "Remove all the annoying clutter from your Twitter.",
+  "version": "1.3.0",
+  "icons": {
+    "16": "icon.png",
+    "32": "icon.png",
+    "64": "icon.png",
+    "128": "icon.png"
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "bct@presti.me"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://twitter.com/*"
+      ],
+      "js": [
+        "js/jquery.js",
+        "js/content.js"
+      ]
+    }
+  ],
+  "background": {
+    "scripts": ["js/background.js"]
+  },
+  "browser_action": {
+    "default_icon": "icon.png",
+    "default_title": "Better Clean Twitter",
+    "default_popup": "popup.html"
+  },
+  "permissions": [
+    "*://twitter.com/*",
+    "*://api.twitter.com/*",
+    "activeTab",
+    "storage",
+    "tabs",
+    "scripting",
+    "webRequest",
+    "nativeMessaging"
+  ]
+}
