@@ -50,6 +50,19 @@ const beginCleanup = (no_sidebar, no_numbers, no_prompt, no_twitter_blue, show_p
   if (no_twitter_blue) {
     var element = document.querySelector('[href="/i/twitter_blue_sign_up"]')
     if (element != null) element.remove();
+
+    element = document.querySelectorAll('[href="/i/verified-choose"]')
+    if (element != null) {
+      for (let index = 0; index < element.length; ++index) {
+        var currentElement = element[index];
+        var parentElement = currentElement.parentElement;
+        if (parentElement.tagName == "ASIDE") {
+          parentElement.parentElement.remove()
+        } else {
+          currentElement.remove()
+        }
+      }
+    }
   }
 
   var sideBar = document.querySelector('[aria-label="Trends"]');
