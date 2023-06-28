@@ -9,7 +9,6 @@
     "64": "icon.png",
     "128": "icon.png"
   },
-  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAzUsaQrxCojYrzOXXvM8gZelZHOs3sK13z2x1lF14wkWGoB2FIQk4Uhjtd5CcyzRsabWd2IBDPjXIFuJhPJ9N/R1xo5hC5uI8iMjDg9iSdZUszB3KVZD7wkEL36Kl9kKAELtcUcUwlBrQ8qbI3kQdnuwk8S5RmjntiSNnX7yG6etRPoVARGUyJXPz/ZFmQEVvgsr8pEPNnNQykX3RY57xVCXSU8J7wx0fMR8BOwjVHVoC/ZahpVWejDhzeTTnNcGqPyYJxLWT6YoyYtG2XwHA3cifyGc1scxNFGlHcmGNy3pCvSPTbUYImY/dax8SZr1jqbr8z3SviA7ERb3MJId2/wIDAQAB",
   "content_scripts": [
     {
       "matches": [
@@ -34,8 +33,7 @@
     "storage",
     "tabs",
     "scripting",
-    "webRequest",
-    "nativeMessaging"
+    "webRequest"
   ],
   "host_permissions": [
     "*://twitter.com/*"
